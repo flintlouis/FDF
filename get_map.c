@@ -6,7 +6,7 @@
 /*   By: fhignett <fhignett@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/10 21:12:50 by FlintLouis     #+#    #+#                */
-/*   Updated: 2019/03/14 17:05:38 by fhignett      ########   odam.nl         */
+/*   Updated: 2019/03/19 13:49:59 by fhignett      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ t_map		*get_map(char *file)
 	t_map *map;
 
 	y = 0;
-	map = (t_map*)ft_memalloc(sizeof(t_map));
+	map = NEW(t_map);
 	set_map_size(&map, file);
 	fd = open(file, O_RDONLY);
 	map->map = (int**)ft_memalloc(sizeof(int*) * map->height);
@@ -92,4 +92,37 @@ t_map		*get_map(char *file)
 	close(fd);
 	free_tab(tab);
 	return (map);
+}
+
+t_range get_range_of_map(t_map *map)
+{
+	t_range range;
+
+	range.min = 2147483647;
+	range.max = -2147483648;
+
+	int x = 0;
+	int y = 0;
+	int z;
+
+	while (x < map->height)
+	{
+		while (y < map->width)
+		{
+			z = map->map[x][y];
+
+			if (z < range.min)
+				range.min = z;
+
+			if (z > range.max)
+				range.max = z;
+
+			y++;
+		}
+
+		y = 0;
+		x++;
+	}
+
+	return range;
 }

@@ -6,7 +6,7 @@
 /*   By: fhignett <fhignett@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/12 18:36:24 by fhignett       #+#    #+#                */
-/*   Updated: 2019/03/15 12:25:27 by fhignett      ########   odam.nl         */
+/*   Updated: 2019/03/19 13:36:51 by fhignett      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ t_point		rot_matrix(t_point pixel, t_fdf *fdf)
 	//makes sure that the amount of pixels inbetween is correct
 	pixel.x *= fdf->cam->zoom;
 	pixel.y *= fdf->cam->zoom;
-	pixel.z *= fdf->cam->zoom + (fdf->map->z * fdf->cam->zoom);
+	pixel.z *= fdf->cam->zoom + (fdf->conf->z * fdf->cam->zoom);
 	
 	//takes teh centre of the image
 	pixel.x -= (fdf->map->width / 2) * fdf->cam->zoom;
@@ -56,7 +56,7 @@ t_point		rot_matrix(t_point pixel, t_fdf *fdf)
 	z_rot(&pixel, fdf->cam->zrot);
 	
 	//puts the image in teh centre of the window
-	pixel.x += (WIDTH / 2);
-	pixel.y += (HEIGHT / 2);
+	pixel.x += (WIDTH / 2 ) + fdf->conf->x * fdf->cam->zoom;
+	pixel.y += (HEIGHT / 2) + fdf->conf->y * fdf->cam->zoom;
 	return (pixel);
 }

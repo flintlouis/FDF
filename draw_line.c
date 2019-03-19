@@ -6,7 +6,7 @@
 /*   By: fhignett <fhignett@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/10 21:10:26 by FlintLouis     #+#    #+#                */
-/*   Updated: 2019/03/18 10:05:14 by fhignett      ########   odam.nl         */
+/*   Updated: 2019/03/19 15:03:50 by fhignett      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,11 @@ t_point point(int x, int y, int z)
 	p.x = x;
 	p.y = y;
 	p.z = z;
+	p.ogz = z;
 	return (p);
 }
 
-void		put_pixel(int x, int y, int colour, t_fdf *fdf) //*| USE FOR PUT IMAGE |*
+void		put_pixel(int x, int y, t_colour colour, t_fdf *fdf) //*| USE FOR PUT IMAGE |*
 {
 	int i;
 
@@ -30,9 +31,9 @@ void		put_pixel(int x, int y, int colour, t_fdf *fdf) //*| USE FOR PUT IMAGE |*
 	if (x > 0 && x < WIDTH && y > 0 && y < HEIGHT)
 	{
 		i = (x * fdf->bits_per_pixel / 8) + (y * fdf->size_line);
-		fdf->data_addr[i] = colour;
-		fdf->data_addr[++i] = colour >> 8;
-		fdf->data_addr[++i] = colour >> 16;
+		fdf->data_addr[i] = colour.b;
+		fdf->data_addr[++i] = colour.g;
+		fdf->data_addr[++i] = colour.r;
 	}
 }
 
@@ -42,17 +43,27 @@ void       plot_line1(t_fdf *fdf, t_point a, t_point b)
 {
     int dx;
     int dy;
+
     int d;
     int sy;
 
+	float dz;
+	float z;
+
     dx = b.x - a.x;
     dy = b.y - a.y;
+	
+	dz = ((float)b.ogz - a.ogz) / dx;
+	z = a.ogz;
+
     d = 2 * dy - dx;
+
     sy = dy >= 0 ? 1 : -1;
     dy = ABS(dy);
+
     while (a.x <= b.x)
     {
-		put_pixel(a.x, a.y, COLOUR, fdf); //*| USE FOR PUT IMAGE |*
+		put_pixel(a.x, a.y, calculate_colour(fdf->gradient, z), fdf); //*| USE FOR PUT IMAGE |*
 		//mlx_pixel_put(fdf->mlx, fdf->win, a.x, a.y, COLOUR); //*| USE FOR PUT WINDOW |*
         if (d > 0)
         {
@@ -61,6 +72,7 @@ void       plot_line1(t_fdf *fdf, t_point a, t_point b)
         }
         d += 2 * dy;
         a.x++;
+		z += dz;
     }
 }
  
@@ -72,14 +84,21 @@ void       plot_line2(t_fdf *fdf, t_point a, t_point b)
     int d;
     int sx;
 
+	float dz;
+	float z;
+
 	dx = b.x - a.x;
     dy = b.y - a.y;
+
+	dz = ((float)b.ogz - a.ogz) / dy;
+	z = a.ogz;
+
     d = 2 * dx - dy;
     sx = dx >= 0 ? 1 : -1;
     dx = ABS(dx);
     while (a.y <= b.y)
     {
-		put_pixel(a.x, a.y, COLOUR, fdf); //*| USE FOR PUT IMAGE |*
+		put_pixel(a.x, a.y, calculate_colour(fdf->gradient, z), fdf); //*| USE FOR PUT IMAGE |*
 		//mlx_pixel_put(fdf->mlx, fdf->win, a.x, a.y, COLOUR); //*| USE FOR PUT WINDOW |*
         if (d > 0)
         {
@@ -88,6 +107,7 @@ void       plot_line2(t_fdf *fdf, t_point a, t_point b)
         }
         d += 2 * dx;
         a.y++;
+		z += dz;
     }
 }
  
