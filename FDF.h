@@ -6,7 +6,7 @@
 /*   By: fhignett <fhignett@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/11 14:34:24 by fhignett       #+#    #+#                */
-/*   Updated: 2019/03/19 15:17:13 by fhignett      ########   odam.nl         */
+/*   Updated: 2019/03/19 15:47:28 by fhignett      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef unsigned char BYTE;
 
 typedef struct s_range {
 	int min;
+	int middle;
 	int max;
 } t_range;
 
@@ -39,16 +40,16 @@ typedef struct s_colour
     BYTE r;
     BYTE g;
     BYTE b;
-
 } t_colour;
 
 typedef struct s_gradient {
 
     int min_z;
-    t_colour min_color;
-
+    t_colour min_colour;
+	int middle_z;
+	t_colour middle_colour;
     int max_z;
-    t_colour max_color;
+    t_colour max_colour;
 } t_gradient;
 
 typedef struct	s_cam

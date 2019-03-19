@@ -113,16 +113,13 @@ t_range get_range_of_map(t_map *map)
 
 			if (z < range.min)
 				range.min = z;
-
 			if (z > range.max)
 				range.max = z;
-
 			y++;
 		}
-
 		y = 0;
 		x++;
 	}
-
+	
 	return range;
 }
