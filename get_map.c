@@ -6,13 +6,16 @@
 /*   By: fhignett <fhignett@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/10 21:12:50 by FlintLouis     #+#    #+#                */
-/*   Updated: 2019/03/19 13:49:59 by fhignett      ########   odam.nl         */
+/*   Updated: 2019/03/21 14:39:47 by fhignett      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "FDF.h"
+#include "fdf.h"
+#include <stdlib.h>
+#include <fcntl.h>
+#include <unistd.h>
 
-void		free_tab(char **tab)
+static	void	free_tab(char **tab)
 {
 	int i;
 
@@ -22,14 +25,14 @@ void		free_tab(char **tab)
 		free(tab[i]);
 		i++;
 	}
-    free(tab[i]);
+	free(tab[i]);
 	free(tab);
 }
 
-int			map_width(char *line)
+static	int		map_width(char *line)
 {
-	char **tab;
-	int width;
+	char	**tab;
+	int		width;
 
 	width = 0;
 	tab = ft_strsplit(line, ' ');
@@ -38,15 +41,15 @@ int			map_width(char *line)
 		width++;
 		tab++;
 	}
-	return(width);
+	return (width);
 }
 
-void		set_map_size(t_map **map, char *file)
+static	void	set_map_size(t_map **map, char *file)
 {
-	int fd;
-	int width;
-	char *line;
-	
+	int		fd;
+	int		width;
+	char	*line;
+
 	fd = open(file, O_RDONLY);
 	width = 0;
 	while (ft_get_next_line(fd, &line))
@@ -62,14 +65,14 @@ void		set_map_size(t_map **map, char *file)
 	close(fd);
 }
 
-t_map		*get_map(char *file)
+t_map			*get_map(char *file)
 {
-	int fd;
-	int x;
-	int y;
-	char **tab;
-	char *line;
-	t_map *map;
+	int		fd;
+	int		x;
+	int		y;
+	char	**tab;
+	char	*line;
+	t_map	*map;
 
 	y = 0;
 	map = NEW(t_map);
@@ -94,23 +97,22 @@ t_map		*get_map(char *file)
 	return (map);
 }
 
-t_range get_range_of_map(t_map *map)
+t_range			get_range_of_map(t_map *map)
 {
-	t_range range;
+	int		x;
+	int		y;
+	int		z;
+	t_range	range;
 
+	x = 0;
+	y = 0;
 	range.min = 2147483647;
 	range.max = -2147483648;
-
-	int x = 0;
-	int y = 0;
-	int z;
-
 	while (x < map->height)
 	{
 		while (y < map->width)
 		{
 			z = map->map[x][y];
-
 			if (z < range.min)
 				range.min = z;
 			if (z > range.max)
@@ -120,6 +122,5 @@ t_range get_range_of_map(t_map *map)
 		y = 0;
 		x++;
 	}
-	
-	return range;
+	return (range);
 }

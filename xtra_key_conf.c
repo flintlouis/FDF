@@ -1,35 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   init_cam.c                                         :+:    :+:            */
+/*   xtra_key_conf.c                                    :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: fhignett <fhignett@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2019/03/11 16:15:50 by fhignett       #+#    #+#                */
-/*   Updated: 2019/03/21 14:27:13 by fhignett      ########   odam.nl         */
+/*   Created: 2019/03/21 14:37:18 by fhignett       #+#    #+#                */
+/*   Updated: 2019/03/21 14:46:58 by fhignett      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-#include <math.h>
+#include <stdlib.h>
 
-double		set_zoom(t_map *map)
+int				close_window(void *param)
 {
-	int window;
-	int map_size;
-	int zoom;
-
-	window = 0.65 * (HEIGHT * WIDTH);
-	map_size = map->height * map->width;
-	zoom = sqrt(((HEIGHT * WIDTH) - window) / map_size);
-	return ((double)zoom);
+	(void)param;
+	exit(0);
+	return (0);
 }
 
-t_cam		*init_cam(t_fdf *fdf)
+int				key_release_conf(int key, t_fdf *fdf)
 {
-	t_cam *cam;
+	(void)fdf;
+	if (key == 53)
+		close_window(fdf);
+	return (0);
+}
 
-	cam = NEW(t_cam);
-	cam->zoom = set_zoom(fdf->map);
-	return (cam);
+void			reset(t_fdf *fdf)
+{
+	fdf->conf->x = 0;
+	fdf->conf->y = 0;
+	fdf->conf->z = 0;
+	fdf->cam->xrot = 0;
+	fdf->cam->yrot = 0;
+	fdf->cam->zrot = 0;
+	fdf->cam->zoom = set_zoom(fdf->map);
 }

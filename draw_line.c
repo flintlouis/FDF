@@ -6,147 +6,131 @@
 /*   By: fhignett <fhignett@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/10 21:10:26 by FlintLouis     #+#    #+#                */
-/*   Updated: 2019/03/19 15:03:50 by fhignett      ########   odam.nl         */
+/*   Updated: 2019/03/21 14:39:11 by fhignett      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "FDF.h"
+#include "fdf.h"
+#include "minilibx_macos/mlx.h"
 
-t_point point(int x, int y, int z)
-{
-	t_point p;
-
-	p.x = x;
-	p.y = y;
-	p.z = z;
-	p.ogz = z;
-	return (p);
-}
-
-void		put_pixel(int x, int y, t_colour colour, t_fdf *fdf) //*| USE FOR PUT IMAGE |*
+static	void	put_pixel(int x, int y, t_colour colour, t_fdf *fdf)
 {
 	int i;
 
-	// index for the data address
 	if (x > 0 && x < WIDTH && y > 0 && y < HEIGHT)
 	{
 		i = (x * fdf->bits_per_pixel / 8) + (y * fdf->size_line);
 		fdf->data_addr[i] = colour.b;
-		fdf->data_addr[++i] = colour.g;
-		fdf->data_addr[++i] = colour.r;
+		i++;
+		fdf->data_addr[i] = colour.g;
+		i++;
+		fdf->data_addr[i] = colour.r;
 	}
 }
 
+/*
+** X++
+*/
 
-// X plus 1
-void       plot_line1(t_fdf *fdf, t_point a, t_point b)
+static	void	plot_line1(t_fdf *fdf, t_point a, t_point b)
 {
-    int dx;
-    int dy;
-
-    int d;
-    int sy;
-
-	float dz;
-	float z;
-
-    dx = b.x - a.x;
-    dy = b.y - a.y;
-	
-	dz = ((float)b.ogz - a.ogz) / dx;
-	z = a.ogz;
-
-    d = 2 * dy - dx;
-
-    sy = dy >= 0 ? 1 : -1;
-    dy = ABS(dy);
-
-    while (a.x <= b.x)
-    {
-		put_pixel(a.x, a.y, calculate_colour(fdf->gradient, z), fdf); //*| USE FOR PUT IMAGE |*
-		//mlx_pixel_put(fdf->mlx, fdf->win, a.x, a.y, COLOUR); //*| USE FOR PUT WINDOW |*
-        if (d > 0)
-        {
-        	a.y += sy;
-        	d -= 2 * dx;
-        }
-        d += 2 * dy;
-        a.x++;
-		z += dz;
-    }
-}
- 
-// Y plus 1
-void       plot_line2(t_fdf *fdf, t_point a, t_point b)
-{
-    int dx;
-    int dy;
-    int d;
-    int sx;
-
-	float dz;
-	float z;
-
-	dx = b.x - a.x;
-    dy = b.y - a.y;
-
-	dz = ((float)b.ogz - a.ogz) / dy;
-	z = a.ogz;
-
-    d = 2 * dx - dy;
-    sx = dx >= 0 ? 1 : -1;
-    dx = ABS(dx);
-    while (a.y <= b.y)
-    {
-		put_pixel(a.x, a.y, calculate_colour(fdf->gradient, z), fdf); //*| USE FOR PUT IMAGE |*
-		//mlx_pixel_put(fdf->mlx, fdf->win, a.x, a.y, COLOUR); //*| USE FOR PUT WINDOW |*
-        if (d > 0)
-        {
-            a.x += sx;
-            d -= 2 * dy;
-        }
-        d += 2 * dx;
-        a.y++;
-		z += dz;
-    }
-}
- 
-void       draw_line(t_fdf *fdf, t_point a, t_point b)
-{
-    int dx;
-    int dy;
+	int		dx;
+	int		dy;
+	int		d;
+	int		sy;
+	float	dz;
+	float	z;
 
 	dx = b.x - a.x;
 	dy = b.y - a.y;
-    if (ABS(dx) >= ABS(dy))
-    {
-    	if (dx > 0)
-    	    plot_line1(fdf, a, b);
-    	else
-    	    plot_line1(fdf, b, a);
-    }
-    else
-    {
-        if (dy > 0)
-            plot_line2(fdf, a, b);
-        else
-            plot_line2(fdf, b, a);
-    }
+	dz = ((float)b.ogz - a.ogz) / dx;
+	z = a.ogz;
+	d = 2 * dy - dx;
+	sy = dy >= 0 ? 1 : -1;
+	dy = ABS(dy);
+	while (a.x <= b.x)
+	{
+		put_pixel(a.x, a.y, calculate_colour(fdf->gradient, z), fdf);
+		if (d > 0)
+		{
+			a.y += sy;
+			d -= 2 * dx;
+		}
+		d += 2 * dy;
+		a.x++;
+		z += dz;
+	}
 }
 
-void	draw_grid(t_fdf *fdf)
+/*
+** Y++
+*/
+
+static	void	plot_line2(t_fdf *fdf, t_point a, t_point b)
 {
-	int i;
-	int j;
-	t_point a;
-	t_point b;
+	int		dx;
+	int		dy;
+	int		d;
+	int		sx;
+	float	dz;
+	float	z;
 
-	// Cleans screen
-	ft_bzero(fdf->data_addr, HEIGHT * WIDTH * (fdf->bits_per_pixel / 8)); //*| USE FOR PUT IMAGE |*
-	////////////////
+	dx = b.x - a.x;
+	dy = b.y - a.y;
+	dz = ((float)b.ogz - a.ogz) / dy;
+	z = a.ogz;
+	d = 2 * dx - dy;
+	sx = dx >= 0 ? 1 : -1;
+	dx = ABS(dx);
+	while (a.y <= b.y)
+	{
+		put_pixel(a.x, a.y, calculate_colour(fdf->gradient, z), fdf);
+		if (d > 0)
+		{
+			a.x += sx;
+			d -= 2 * dy;
+		}
+		d += 2 * dx;
+		a.y++;
+		z += dz;
+	}
+}
 
-	// mlx_clear_window(fdf->mlx, fdf->win); //*| USE FOR PUT WINDOW |*
+static	void	draw_line(t_fdf *fdf, t_point a, t_point b)
+{
+	int dx;
+	int dy;
 
+	dx = b.x - a.x;
+	dy = b.y - a.y;
+	if (ABS(dx) >= ABS(dy))
+	{
+		if (dx > 0)
+			plot_line1(fdf, a, b);
+		else
+			plot_line1(fdf, b, a);
+	}
+	else
+	{
+		if (dy > 0)
+			plot_line2(fdf, a, b);
+		else
+			plot_line2(fdf, b, a);
+	}
+}
+
+/*
+** bzero cleans the screen
+*/
+
+void			draw_grid(t_fdf *fdf)
+{
+	int		i;
+	int		j;
+	t_point	a;
+	t_point	b;
+
+	ft_bzero(fdf->data_addr, HEIGHT * WIDTH * (fdf->bits_per_pixel / 8));
 	i = 0;
 	while (i < fdf->map->height)
 	{
@@ -169,5 +153,5 @@ void	draw_grid(t_fdf *fdf)
 		}
 		i++;
 	}
-	mlx_put_image_to_window(fdf->mlx, fdf->win, fdf->img, 0, 0); //*| USE FOR PUT IMAGE |*
+	mlx_put_image_to_window(fdf->mlx, fdf->win, fdf->img, 0, 0);
 }
