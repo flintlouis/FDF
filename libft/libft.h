@@ -6,7 +6,7 @@
 /*   By: fhignett <fhignett@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/01/09 14:45:47 by fhignett       #+#    #+#                */
-/*   Updated: 2019/03/12 13:22:08 by fhignett      ########   odam.nl         */
+/*   Updated: 2019/03/21 15:26:29 by fhignett      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void				ft_print_byte(unsigned char byte);
 void				ft_sort_int_tab(int *tab, unsigned int size);
 void				ft_lstadd_back(t_list **alst, t_list *new);
 void				ft_lstinsert(t_list *node, t_list *new);
+void				ft_free_2darray(void **array);
 
 void				*ft_memset(void *b, int c, size_t len);
 void				*ft_memcpy(void *dst, const void *src, size_t n);

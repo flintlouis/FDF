@@ -6,7 +6,7 @@
 /*   By: fhignett <fhignett@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/12 14:53:24 by fhignett       #+#    #+#                */
-/*   Updated: 2019/03/21 14:45:24 by fhignett      ########   odam.nl         */
+/*   Updated: 2019/03/21 18:16:23 by fhignett      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,8 @@ int				key_press_conf(int key, t_fdf *fdf)
 		fdf->conf->y += 0.5;
 	if (key == 1)
 		fdf->conf->y -= 0.5;
-	if (key == 49)
-		reset(fdf);
+	if (key == 257)
+		fdf->conf->shift = 1;
 	key_press_conf_xtra(key, fdf);
 	return (0);
 }

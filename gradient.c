@@ -6,7 +6,7 @@
 /*   By: fhignett <fhignett@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/18 21:58:18 by FlintLouis     #+#    #+#                */
-/*   Updated: 2019/03/21 14:26:42 by fhignett      ########   odam.nl         */
+/*   Updated: 2019/03/21 16:54:35 by fhignett      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ t_gradient			*init_gradient(t_map *map)
 	gradient->max_z = range.max;
 	gradient->middle_z = (int)round((range.max + range.min) / 2);
 	gradient->min_z = range.min;
-	gradient->max_colour = colour(255, 255, 255);
-	gradient->middle_colour = colour(175, 0, 0);
-	gradient->min_colour = colour(0, 0, 100);
+	gradient->max_colour = colour(255, 0, 0);
+	gradient->middle_colour = colour(0, 255, 0);
+	gradient->min_colour = colour(0, 0, 255);
 	return (gradient);
 }
 

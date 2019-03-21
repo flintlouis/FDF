@@ -6,7 +6,7 @@
 /*   By: fhignett <fhignett@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/10 21:12:50 by FlintLouis     #+#    #+#                */
-/*   Updated: 2019/03/21 14:39:47 by fhignett      ########   odam.nl         */
+/*   Updated: 2019/03/21 15:52:34 by fhignett      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,6 @@
 #include <stdlib.h>
 #include <fcntl.h>
 #include <unistd.h>
-
-static	void	free_tab(char **tab)
-{
-	int i;
-
-	i = 0;
-	while (tab[i])
-	{
-		free(tab[i]);
-		i++;
-	}
-	free(tab[i]);
-	free(tab);
-}
 
 static	int		map_width(char *line)
 {
@@ -65,10 +51,21 @@ static	void	set_map_size(t_map **map, char *file)
 	close(fd);
 }
 
+static	void	get_x(char **tab, int **map)
+{
+	int x;
+
+	x = 0;
+	while (tab[x])
+	{
+		(*map)[x] = ft_atoi(tab[x]);
+		x++;
+	}
+}
+
 t_map			*get_map(char *file)
 {
 	int		fd;
-	int		x;
 	int		y;
 	char	**tab;
 	char	*line;
@@ -83,17 +80,12 @@ t_map			*get_map(char *file)
 	{
 		tab = ft_strsplit(line, ' ');
 		map->map[y] = (int*)ft_memalloc(sizeof(int) * map->width);
-		x = 0;
-		while (tab[x])
-		{
-			map->map[y][x] = ft_atoi(tab[x]);
-			x++;
-		}
+		get_x(tab, &map->map[y]);
 		y++;
 		free(line);
 	}
 	close(fd);
-	free_tab(tab);
+	ft_free_2darray((void**)tab);
 	return (map);
 }
 

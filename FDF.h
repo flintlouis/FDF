@@ -6,7 +6,7 @@
 /*   By: fhignett <fhignett@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/11 14:34:24 by fhignett       #+#    #+#                */
-/*   Updated: 2019/03/21 14:38:12 by fhignett      ########   odam.nl         */
+/*   Updated: 2019/03/21 18:17:07 by fhignett      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ typedef struct			s_conf
 	double				z;
 	double				x;
 	double				y;
+	int					shift;
 	int					last_x;
 	int					last_y;
 	int					rm_down;
@@ -93,8 +94,7 @@ typedef struct			s_fdf
 	t_conf				*conf;
 }						t_fdf;
 
-void					draw_grid(t_fdf *fdf);
-void					reset(t_fdf *fdf);
+void					calculate_line(t_fdf *fdf, t_point a, int i, int j);
 
 double					set_zoom(t_map *map);
 

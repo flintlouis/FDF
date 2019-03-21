@@ -1,14 +1,14 @@
-#******************************************************************************#
+# **************************************************************************** #
 #                                                                              #
 #                                                         ::::::::             #
 #    Makefile                                           :+:    :+:             #
 #                                                      +:+                     #
-#    By: fhignett <marvin@codam.nl>                   +#+                      #
+#    By: fhignett <fhignett@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
-#    Created: 2019/01/09 15:24:52 by fhignett      #+#    #+#                  #
-#    Updated: 2019/02/04 17:47:53 by fhignett      ########   odam.nl          #
+#    Created: 2019/01/09 15:24:52 by fhignett       #+#    #+#                 #
+#    Updated: 2019/03/21 15:27:07 by fhignett      ########   odam.nl          #
 #                                                                              #
-#******************************************************************************#
+# **************************************************************************** #
 
 NAME = libft.a
 FILESC = ft_putnbr.c ft_putchar.c ft_putstr.c ft_putendl.c ft_putnbr_fd.c \
@@ -23,7 +23,7 @@ ft_strncmp.c ft_memcmp.c ft_strequ.c ft_strnequ.c ft_strlen.c ft_strlcat.c \
 ft_lstnew.c ft_lstdelone.c ft_lstdel.c ft_lstadd.c ft_lstiter.c ft_lstmap.c \
 ft_countwords.c ft_print_byte.c ft_sort_int_tab.c ft_lstadd_back.c \
 ft_strsplit_list.c ft_lstinsert.c ft_lstfold.c ft_power.c ft_get_next_line.c \
-ft_sqrt.c
+ft_sqrt.c ft_atoi_base.c ft_itoa_base.c ft_free_2darray.c
 FILESO = $(FILESC:.c=.o)
 
 all: $(NAME)

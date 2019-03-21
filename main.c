@@ -6,7 +6,7 @@
 /*   By: fhignett <fhignett@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/10 21:11:37 by FlintLouis     #+#    #+#                */
-/*   Updated: 2019/03/21 14:47:15 by fhignett      ########   odam.nl         */
+/*   Updated: 2019/03/21 15:10:02 by fhignett      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,31 @@ t_point			point(int x, int y, int z)
 	return (p);
 }
 
-static	int		project(t_fdf *fdf)
+/*
+** bzero cleans the screen
+*/
+
+static	int		draw_grid(t_fdf *fdf)
 {
-	draw_grid(fdf);
+	int		i;
+	int		j;
+	t_point	a;
+
+	ft_bzero(fdf->data_addr, HEIGHT * WIDTH * (fdf->bits_per_pixel / 8));
+	i = 0;
+	while (i < fdf->map->height)
+	{
+		j = 0;
+		a = point(j, i, fdf->map->map[i][j]);
+		while (j < fdf->map->width)
+		{
+			calculate_line(fdf, a, i, j);
+			j++;
+			a = point(j, i, fdf->map->map[i][j]);
+		}
+		i++;
+	}
+	mlx_put_image_to_window(fdf->mlx, fdf->win, fdf->img, 0, 0);
 	return (0);
 }
 
@@ -55,7 +77,7 @@ static	void	init_fdf(char *file)
 	mlx_hook(fdf->win, 2, 1L << 0, key_press_conf, fdf);
 	mlx_hook(fdf->win, 3, 1L << 1, key_release_conf, fdf);
 	mlx_hook(fdf->win, 17, 1L << 17, close_window, NULL);
-	mlx_loop_hook(fdf->mlx, project, fdf);
+	mlx_loop_hook(fdf->mlx, draw_grid, fdf);
 	mlx_loop(fdf->mlx);
 }
 

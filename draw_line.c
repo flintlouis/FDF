@@ -6,7 +6,7 @@
 /*   By: fhignett <fhignett@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/10 21:10:26 by FlintLouis     #+#    #+#                */
-/*   Updated: 2019/03/21 14:39:11 by fhignett      ########   odam.nl         */
+/*   Updated: 2019/03/21 15:07:50 by fhignett      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,29 +34,28 @@ static	void	put_pixel(int x, int y, t_colour colour, t_fdf *fdf)
 
 static	void	plot_line1(t_fdf *fdf, t_point a, t_point b)
 {
-	int		dx;
-	int		dy;
+	int		dxy[2];
 	int		d;
 	int		sy;
 	float	dz;
 	float	z;
 
-	dx = b.x - a.x;
-	dy = b.y - a.y;
-	dz = ((float)b.ogz - a.ogz) / dx;
+	dxy[0] = b.x - a.x;
+	dxy[1] = b.y - a.y;
+	dz = ((float)b.ogz - a.ogz) / dxy[0];
 	z = a.ogz;
-	d = 2 * dy - dx;
-	sy = dy >= 0 ? 1 : -1;
-	dy = ABS(dy);
+	d = 2 * dxy[1] - dxy[0];
+	sy = dxy[1] >= 0 ? 1 : -1;
+	dxy[1] = ABS(dxy[1]);
 	while (a.x <= b.x)
 	{
 		put_pixel(a.x, a.y, calculate_colour(fdf->gradient, z), fdf);
 		if (d > 0)
 		{
 			a.y += sy;
-			d -= 2 * dx;
+			d -= 2 * dxy[0];
 		}
-		d += 2 * dy;
+		d += 2 * dxy[1];
 		a.x++;
 		z += dz;
 	}
@@ -68,29 +67,28 @@ static	void	plot_line1(t_fdf *fdf, t_point a, t_point b)
 
 static	void	plot_line2(t_fdf *fdf, t_point a, t_point b)
 {
-	int		dx;
-	int		dy;
+	int		dxy[2];
 	int		d;
 	int		sx;
 	float	dz;
 	float	z;
 
-	dx = b.x - a.x;
-	dy = b.y - a.y;
-	dz = ((float)b.ogz - a.ogz) / dy;
+	dxy[0] = b.x - a.x;
+	dxy[1] = b.y - a.y;
+	dz = ((float)b.ogz - a.ogz) / dxy[1];
 	z = a.ogz;
-	d = 2 * dx - dy;
-	sx = dx >= 0 ? 1 : -1;
-	dx = ABS(dx);
+	d = 2 * dxy[0] - dxy[1];
+	sx = dxy[0] >= 0 ? 1 : -1;
+	dxy[0] = ABS(dxy[0]);
 	while (a.y <= b.y)
 	{
 		put_pixel(a.x, a.y, calculate_colour(fdf->gradient, z), fdf);
 		if (d > 0)
 		{
 			a.x += sx;
-			d -= 2 * dy;
+			d -= 2 * dxy[1];
 		}
-		d += 2 * dx;
+		d += 2 * dxy[0];
 		a.y++;
 		z += dz;
 	}
@@ -119,39 +117,18 @@ static	void	draw_line(t_fdf *fdf, t_point a, t_point b)
 	}
 }
 
-/*
-** bzero cleans the screen
-*/
-
-void			draw_grid(t_fdf *fdf)
+void			calculate_line(t_fdf *fdf, t_point a, int i, int j)
 {
-	int		i;
-	int		j;
-	t_point	a;
 	t_point	b;
 
-	ft_bzero(fdf->data_addr, HEIGHT * WIDTH * (fdf->bits_per_pixel / 8));
-	i = 0;
-	while (i < fdf->map->height)
+	if (j < fdf->map->width - 1)
 	{
-		j = 0;
-		a = point(j, i, fdf->map->map[i][j]);
-		while (j < fdf->map->width)
-		{
-			if (j < fdf->map->width - 1)
-			{
-				b = point(a.x + 1, a.y, fdf->map->map[i][j + 1]);
-				draw_line(fdf, rot_matrix(a, fdf), rot_matrix(b, fdf));
-			}
-			if (i < fdf->map->height - 1)
-			{
-				b = point(a.x, a.y + 1, fdf->map->map[i + 1][j]);
-				draw_line(fdf, rot_matrix(a, fdf), rot_matrix(b, fdf));
-			}
-			j++;
-			a = point(j, i, fdf->map->map[i][j]);
-		}
-		i++;
+		b = point(a.x + 1, a.y, fdf->map->map[i][j + 1]);
+		draw_line(fdf, rot_matrix(a, fdf), rot_matrix(b, fdf));
 	}
-	mlx_put_image_to_window(fdf->mlx, fdf->win, fdf->img, 0, 0);
+	if (i < fdf->map->height - 1)
+	{
+		b = point(a.x, a.y + 1, fdf->map->map[i + 1][j]);
+		draw_line(fdf, rot_matrix(a, fdf), rot_matrix(b, fdf));
+	}
 }
