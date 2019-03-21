@@ -6,7 +6,7 @@
 /*   By: fhignett <fhignett@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/21 14:37:18 by fhignett       #+#    #+#                */
-/*   Updated: 2019/03/21 18:22:54 by fhignett      ########   odam.nl         */
+/*   Updated: 2019/03/21 18:29:52 by fhignett      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static	void	iso(t_fdf *fdf)
 	fdf->conf->z = 0;
 	fdf->cam->xrot = -30 * (M_PI / 180);
 	fdf->cam->yrot = 30 * (M_PI / 180);
-	fdf->cam->zrot = -30 * (M_PI / 180);
+	fdf->cam->zrot = -38 * (M_PI / 180);
 	fdf->cam->zoom = set_zoom(fdf->map);
 }
 
