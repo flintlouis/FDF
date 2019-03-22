@@ -6,7 +6,7 @@
 /*   By: fhignett <fhignett@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/18 21:58:18 by FlintLouis     #+#    #+#                */
-/*   Updated: 2019/03/22 13:26:19 by fhignett      ########   odam.nl         */
+/*   Updated: 2019/03/22 18:49:30 by fhignett      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ static	float		clamp(int min, int max, float z)
 
 t_colour			calculate_colour(t_gradient *gradient, float z)
 {
+	if (gradient->min_z == gradient->max_z)
+		return (gradient->min_colour);
 	if (z < gradient->middle_z)
 	{
 		z = (z - gradient->min_z) / (gradient->middle_z - gradient->min_z);

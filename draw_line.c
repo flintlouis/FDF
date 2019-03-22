@@ -6,14 +6,14 @@
 /*   By: fhignett <fhignett@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/10 21:10:26 by FlintLouis     #+#    #+#                */
-/*   Updated: 2019/03/21 15:07:50 by fhignett      ########   odam.nl         */
+/*   Updated: 2019/03/22 18:49:41 by fhignett      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 #include "minilibx_macos/mlx.h"
 
-static	void	put_pixel(int x, int y, t_colour colour, t_fdf *fdf)
+static	void	put_pixel(int x, int y, t_fdf *fdf, t_colour colour)
 {
 	int i;
 
@@ -49,7 +49,7 @@ static	void	plot_line1(t_fdf *fdf, t_point a, t_point b)
 	dxy[1] = ABS(dxy[1]);
 	while (a.x <= b.x)
 	{
-		put_pixel(a.x, a.y, calculate_colour(fdf->gradient, z), fdf);
+		put_pixel(a.x, a.y, fdf, calculate_colour(fdf->gradient, z));
 		if (d > 0)
 		{
 			a.y += sy;
@@ -82,7 +82,7 @@ static	void	plot_line2(t_fdf *fdf, t_point a, t_point b)
 	dxy[0] = ABS(dxy[0]);
 	while (a.y <= b.y)
 	{
-		put_pixel(a.x, a.y, calculate_colour(fdf->gradient, z), fdf);
+		put_pixel(a.x, a.y, fdf, calculate_colour(fdf->gradient, z));
 		if (d > 0)
 		{
 			a.x += sx;
