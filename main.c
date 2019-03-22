@@ -6,7 +6,7 @@
 /*   By: fhignett <fhignett@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/10 21:11:37 by FlintLouis     #+#    #+#                */
-/*   Updated: 2019/03/21 15:10:02 by fhignett      ########   odam.nl         */
+/*   Updated: 2019/03/22 18:30:28 by fhignett      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,10 +85,15 @@ int				main(int argc, char **argv)
 {
 	if (argc != 2)
 	{
-		ft_putendl("usage: ./fdf file_name");
+		ft_putendl("Usage: ./fdf <filename> [ case_size z_size ]");
 		return (0);
 	}
-	else
+	if (errors(1, argv[1]) == 1)
 		init_fdf(argv[1]);
+	else
+	{
+		ft_putstr("No file ");
+		ft_putendl(argv[1]);
+	}
 	return (0);
 }

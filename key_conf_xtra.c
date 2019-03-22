@@ -6,7 +6,7 @@
 /*   By: fhignett <fhignett@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/21 14:37:18 by fhignett       #+#    #+#                */
-/*   Updated: 2019/03/21 18:29:52 by fhignett      ########   odam.nl         */
+/*   Updated: 2019/03/22 18:28:51 by fhignett      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 #include <math.h>
 #include <stdlib.h>
 
-int				close_window(void *param)
+int				close_window(void *ptr)
 {
-	(void)param;
+	(void)ptr;
 	exit(0);
 	return (0);
 }
@@ -26,9 +26,9 @@ static	void	iso(t_fdf *fdf)
 	fdf->conf->x = 0;
 	fdf->conf->y = 0;
 	fdf->conf->z = 0;
-	fdf->cam->xrot = -30 * (M_PI / 180);
-	fdf->cam->yrot = 30 * (M_PI / 180);
-	fdf->cam->zrot = -38 * (M_PI / 180);
+	fdf->cam->xrot = -45 * (M_PI / 180);
+	fdf->cam->yrot = -35 * (M_PI / 180);
+	fdf->cam->zrot = 30 * (M_PI / 180);
 	fdf->cam->zoom = set_zoom(fdf->map);
 }
 

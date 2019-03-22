@@ -6,7 +6,7 @@
 /*   By: fhignett <fhignett@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/11 14:34:24 by fhignett       #+#    #+#                */
-/*   Updated: 2019/03/21 18:17:07 by fhignett      ########   odam.nl         */
+/*   Updated: 2019/03/22 18:29:36 by fhignett      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,8 @@ void					calculate_line(t_fdf *fdf, t_point a, int i, int j);
 
 double					set_zoom(t_map *map);
 
-int						close_window(void *param);
+int						errors(int error, char *str);
+int						close_window(void *ptr);
 int						key_release_conf(int key, t_fdf *fdf);
 int						key_press_conf(int key, t_fdf *fdf);
 int						mouse_move(int x, int y, t_fdf *fdf);

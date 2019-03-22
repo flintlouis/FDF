@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   ft_strsplit.c                                      :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: fhignett <marvin@codam.nl>                   +#+                     */
+/*   By: fhignett <fhignett@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2019/01/14 16:22:42 by fhignett      #+#    #+#                 */
-/*   Updated: 2019/01/14 16:22:43 by fhignett      ########   odam.nl         */
+/*   Created: 2019/01/14 16:22:42 by fhignett       #+#    #+#                */
+/*   Updated: 2019/03/22 17:28:50 by fhignett      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
