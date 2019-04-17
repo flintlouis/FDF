@@ -6,13 +6,9 @@
 /*   By: fhignett <fhignett@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/10 21:11:37 by FlintLouis     #+#    #+#                */
-/*   Updated: 2019/03/22 18:30:28 by fhignett      ########   odam.nl         */
+/*   Updated: 2019/04/13 16:31:23 by fhignett      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
-
-/*
-** ERRORS FIXEN
-*/
 
 #include "fdf.h"
 #include <stdlib.h>
@@ -54,6 +50,7 @@ static	int		draw_grid(t_fdf *fdf)
 		i++;
 	}
 	mlx_put_image_to_window(fdf->mlx, fdf->win, fdf->img, 0, 0);
+	mlx_string_put(fdf->mlx, fdf->win, 50, 50, 0xFFFFFF, "FDF");
 	return (0);
 }
 

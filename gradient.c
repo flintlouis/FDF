@@ -6,7 +6,7 @@
 /*   By: fhignett <fhignett@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/18 21:58:18 by FlintLouis     #+#    #+#                */
-/*   Updated: 2019/03/22 18:49:30 by fhignett      ########   odam.nl         */
+/*   Updated: 2019/04/02 13:14:46 by fhignett      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ t_gradient			*init_gradient(t_map *map)
 	gradient->max_z = range.max;
 	gradient->middle_z = (int)round((range.max + range.min) / 2);
 	gradient->min_z = range.min;
-	gradient->max_colour = colour(0, 255, 255);
-	gradient->middle_colour = colour(128, 0, 128);
-	gradient->min_colour = colour(249, 228, 183);
+	gradient->max_colour = colour(255, 255, 255);
+	gradient->middle_colour = colour(125, 0, 125);
+	gradient->min_colour = colour(255, 0, 0);
 	return (gradient);
 }
 
@@ -58,9 +58,11 @@ static	float		clamp(int min, int max, float z)
 
 t_colour			calculate_colour(t_gradient *gradient, float z)
 {
-	if (gradient->min_z == gradient->max_z)
+	if (gradient->min_z == gradient->max_z
+	|| gradient->middle_z == gradient->max_z
+	|| gradient->min_z == gradient->middle_z)
 		return (gradient->min_colour);
-	if (z < gradient->middle_z)
+	else if (z < gradient->middle_z)
 	{
 		z = (z - gradient->min_z) / (gradient->middle_z - gradient->min_z);
 		z = clamp(0, 1, z);

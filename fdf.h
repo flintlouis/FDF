@@ -6,7 +6,7 @@
 /*   By: fhignett <fhignett@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/11 14:34:24 by fhignett       #+#    #+#                */
-/*   Updated: 2019/03/22 18:29:36 by fhignett      ########   odam.nl         */
+/*   Updated: 2019/04/02 14:17:29 by fhignett      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 
 # include "libft/libft.h"
 
-# define WIDTH 1000
-# define HEIGHT 1000
+# define WIDTH 2700
+# define HEIGHT 1250
 # define NEW(x) (x*)ft_memalloc(sizeof(x))
 
 typedef unsigned char	t_byte;

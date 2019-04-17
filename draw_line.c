@@ -6,7 +6,7 @@
 /*   By: fhignett <fhignett@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/10 21:10:26 by FlintLouis     #+#    #+#                */
-/*   Updated: 2019/03/22 18:49:41 by fhignett      ########   odam.nl         */
+/*   Updated: 2019/03/27 12:38:53 by fhignett      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,12 @@ static	void	plot_line2(t_fdf *fdf, t_point a, t_point b)
 		z += dz;
 	}
 }
+
+/*
+** Makes sure with the first 'if' statements which delta is bigger
+** between x and y and with the second 'if' statements it checks
+** that the delta between a & b never a negative number is
+*/
 
 static	void	draw_line(t_fdf *fdf, t_point a, t_point b)
 {
