@@ -1,5 +1,5 @@
 # FDF
 
-![](.fdf.git)
+![](.fdf.gif)
 
 Height map visualizer
