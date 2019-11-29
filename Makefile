@@ -6,7 +6,7 @@
 #    By: fhignett <fhignett@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2019/01/24 12:18:10 by rkuijper       #+#    #+#                 #
-#    Updated: 2019/03/22 18:55:24 by fhignett      ########   odam.nl          #
+#    Updated: 2019/10/31 12:10:29 by fhignett      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ all: $(NAME)
 $(NAME):
 	@echo "Compiling..."
 	@make -C libft
-	@gcc -Wall -Werror -Wextra -o $(NAME) $(FILESC) $(LIB) $(INCL) -framework OpenGL -framework AppKit
+	@gcc -Wall -Werror -Wextra -o $(NAME) $(FILESC) $(LIB) $(INCL) -framework OpenGL -framework AppKit -O3 -funroll-loops
 	@echo "Done!"
 
 clean:

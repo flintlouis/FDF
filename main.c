@@ -6,7 +6,7 @@
 /*   By: fhignett <fhignett@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/10 21:11:37 by FlintLouis     #+#    #+#                */
-/*   Updated: 2019/04/13 16:31:23 by fhignett      ########   odam.nl         */
+/*   Updated: 2019/07/12 17:45:21 by fhignett      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,13 +68,13 @@ static	void	init_fdf(char *file)
 	fdf->cam = init_cam(fdf);
 	fdf->gradient = init_gradient(fdf->map);
 	fdf->conf = NEW(t_conf);
+	mlx_loop_hook(fdf->mlx, draw_grid, fdf);
 	mlx_hook(fdf->win, 4, 1L << 2, mouse_press, fdf);
 	mlx_hook(fdf->win, 5, 1L << 3, mouse_release, fdf);
 	mlx_hook(fdf->win, 6, 1L << 6, mouse_move, fdf);
 	mlx_hook(fdf->win, 2, 1L << 0, key_press_conf, fdf);
 	mlx_hook(fdf->win, 3, 1L << 1, key_release_conf, fdf);
 	mlx_hook(fdf->win, 17, 1L << 17, close_window, NULL);
-	mlx_loop_hook(fdf->mlx, draw_grid, fdf);
 	mlx_loop(fdf->mlx);
 }
 

@@ -6,7 +6,7 @@
 /*   By: fhignett <fhignett@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/10 21:10:26 by FlintLouis     #+#    #+#                */
-/*   Updated: 2019/03/27 12:38:53 by fhignett      ########   odam.nl         */
+/*   Updated: 2019/11/29 11:53:10 by fhignett      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static	void	put_pixel(int x, int y, t_fdf *fdf, t_colour colour)
 {
 	int i;
 
-	if (x > 0 && x < WIDTH && y > 0 && y < HEIGHT)
+	if (x >= 0 && x < WIDTH && y >= 0 && y < HEIGHT)
 	{
 		i = (x * fdf->bits_per_pixel / 8) + (y * fdf->size_line);
 		fdf->data_addr[i] = colour.b;
@@ -96,7 +96,7 @@ static	void	plot_line2(t_fdf *fdf, t_point a, t_point b)
 
 /*
 ** Makes sure with the first 'if' statements which delta is bigger
-** between x and y and with the second 'if' statements it checks
+** between X and Y and with the second 'if' statements it checks
 ** that the delta between a & b never a negative number is
 */
 
